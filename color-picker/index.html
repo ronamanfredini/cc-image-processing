@@ -1,0 +1,72 @@
+<html>
+
+</html>
+
+<body>
+  <div>
+    <label>R</label>
+    <input min="0" max="255" id="R" value="1" /></input>
+  </div>
+  <div>
+    <label>G</label>
+    <input min="0" max="255" id="G" value="2" /></input>
+  </div>
+  <div>
+    <label>B</label>
+    <input min="0" max="255" id="B" value="3" /></input>
+  </div>
+
+  <div>
+    <button onclick="converter()">Converter</button>
+  </div>
+</body>
+<script>
+
+  function getMax(...numbers) {
+    let max = -1;
+    for (const num of numbers) {
+      if (num > max) {
+        max = num;
+      }
+    }
+
+    return max;
+  }
+
+  function rgbParaCinza(r, g, b) {
+    return (r + g + b) / 3;
+  }
+
+  function normalizarRgb(r, g, b) {
+    return [r / 255, g / 255, b / 255];
+  }
+
+  function cmyk(r, g, b) {
+    const [ rNormalizado, gNormalizado, bNormalizado ] = normalizarRgb(r, g, b);
+    console.log(getMax(rNormalizado, gNormalizado, bNormalizado));
+    const K = 1 - getMax(rNormalizado, gNormalizado, bNormalizado);
+    const C = (1 - rNormalizado - K) / (1 - K);
+    const M = (1 - gNormalizado - K) / (1 - K);
+    const Y = (1 - bNormalizado - K) / (1 - K);
+    return [C, M, Y, K];
+  }
+
+  function converter() {
+    const transformacoes = [
+      normalizarRgb,
+      cmyk,
+      rgbParaCinza
+    ];
+
+    const { R, G, B } = {
+      R: document.getElementById('R').value,
+      G: document.getElementById('G').value,
+      B: document.getElementById('B').value
+    };
+
+    transformacoes.forEach(transformacao => console.log(transformacao(R, G, B)));
+  }
+
+  converter();
+
+</script>
