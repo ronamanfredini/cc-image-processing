@@ -24,38 +24,79 @@
 
   function getMax(...numbers) {
     let max = -1;
-    for (const num of numbers) {
+    let maxIdx = -1;
+    for (let i = 0; i < numbers.length; i++) {
+      const num = numbers[i];
       if (num > max) {
         max = num;
+        maxIdx = i;
       }
     }
 
-    return max;
+    return [max, maxIdx];
+  }
+
+  function getMin(...numbers) {
+    let min = 99999999;
+    let minIdx = -1;
+    for (let i = 0; i < numbers.length; i++) {
+      const num = numbers[i];
+      if (num < min) {
+        min = num;
+        minIdx = i;
+      }
+    }
+
+    return [min, minIdx];
   }
 
   function rgbParaCinza(r, g, b) {
     return (r + g + b) / 3;
   }
 
-  function normalizarRgb(r, g, b) {
+  function transformaEntreZeroEUm(r, g, b) {
     return [r / 255, g / 255, b / 255];
   }
 
+  function hsv(r, g, b) {
+    const [rTransformado, gTransformado, bTransformado] = transformaEntreZeroEUm(r, g, b);
+    const [max, maxIdx] = getMax(rTransformado, gTransformado, bTransformado);
+    const [min, minIdx] = getMin(rTransformado, gTransformado, bTransformado);
+    let h = 60;
+    if (maxIdx === 0 && gTransformado >= bTransformado) {
+      h = h * ((gTransformado - bTransformado) / (max - min));
+    }
+
+    if (maxIdx === 0 && gTransformado < bTransformado) {
+      h = (h * ((gTransformado - bTransformado) / (max - min))) + 360;
+    }
+
+    if (maxIdx === 1) {
+      h = (h * ((bTransformado - rTransformado) / (max - min))) + 120;
+    }
+
+    if (maxIdx === 2) {
+      h = (h * ((rTransformado - gTransformado) / (max - min))) + 240;
+    }
+    return [h, (max - min) / max, max];
+  }
+
   function cmyk(r, g, b) {
-    const [ rNormalizado, gNormalizado, bNormalizado ] = normalizarRgb(r, g, b);
-    console.log(getMax(rNormalizado, gNormalizado, bNormalizado));
-    const K = 1 - getMax(rNormalizado, gNormalizado, bNormalizado);
-    const C = (1 - rNormalizado - K) / (1 - K);
-    const M = (1 - gNormalizado - K) / (1 - K);
-    const Y = (1 - bNormalizado - K) / (1 - K);
+    const [rTransformado, gTransformado, bTransformado] = transformaEntreZeroEUm(r, g, b);
+    const [max, maxIdx] = getMax(rTransformado, gTransformado, bTransformado);
+    const K = 1 - max;
+    const C = (1 - rTransformado - K) / (1 - K);
+    const M = (1 - gTransformado - K) / (1 - K);
+    const Y = (1 - bTransformado - K) / (1 - K);
     return [C, M, Y, K];
   }
 
   function converter() {
     const transformacoes = [
-      normalizarRgb,
+      transformaEntreZeroEUm,
       cmyk,
-      rgbParaCinza
+      rgbParaCinza,
+      hsv
     ];
 
     const { R, G, B } = {
