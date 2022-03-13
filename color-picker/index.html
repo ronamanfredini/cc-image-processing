@@ -3,21 +3,67 @@
 </html>
 
 <body>
-  <div>
-    <label>R</label>
-    <input min="0" max="255" id="R" value="1" /></input>
-  </div>
-  <div>
-    <label>G</label>
-    <input min="0" max="255" id="G" value="2" /></input>
-  </div>
-  <div>
-    <label>B</label>
-    <input min="0" max="255" id="B" value="3" /></input>
-  </div>
-
-  <div>
-    <button onclick="converter()">Converter</button>
+  <div  style="display: flex; width: 80%; justify-content: space-between;">
+    <div>
+      <h2>RGB para todos</h2>
+      <div>
+        <label>R</label>
+        <input min="0" max="255" id="R" value="1" /></input>
+      </div>
+      <div>
+        <label>G</label>
+        <input min="0" max="255" id="G" value="2" /></input>
+      </div>
+      <div>
+        <label>B</label>
+        <input min="0" max="255" id="B" value="3" /></input>
+      </div>
+    
+      <div>
+        <button onclick="converter()">Converter</button>
+      </div>
+    </div>
+    <div>
+      <h2>HSV para RGB</h2>
+      <div>
+        <label>H</label>
+        <input min="0" max="360" id="H" value="1" type="number" /></input>
+      </div>
+      <div>
+        <label>S</label>
+        <input min="0" max="100" id="S" value="2" type="number"/></input>
+      </div>
+      <div>
+        <label>V</label>
+        <input min="0" max="100" id="V" value="3" type="number"/></input>
+      </div>
+    
+      <div>
+        <button onclick="converterHsvToRgb()">Converter</button>
+      </div>
+    </div>
+    <div>
+      <h2>CMYK para RGB</h2>
+      <div>
+        <label>C</label>
+        <input min="0" max="100" id="C" value="1" type="number"/></input>
+      </div>
+      <div>
+        <label>M</label>
+        <input min="0" max="100" id="M" value="2" type="number"/></input>
+      </div>
+      <div>
+        <label>Y</label>
+        <input min="0" max="100" id="Y" value="3" type="number"/></input>
+      </div>
+      <div>
+        <label>K</label>
+        <input min="0" max="100" id="K" value="4" type="number"/></input>
+      </div>
+      <div>
+        <button onclick="converterCmykToRgb()">Converter</button>
+      </div>
+    </div>
   </div>
 </body>
 <script>
@@ -35,6 +81,60 @@
 
     return [max, maxIdx];
   }
+
+  function converterHsvToRgb() {
+    const { H, S, V} = {
+      H: document.getElementById('H').value,
+      S: document.getElementById('S').value / 100,
+      V: document.getElementById('V').value / 100
+    };
+    let hToR = 0; 
+    let sToG = 0;
+    let vToB = 0;
+
+    let C = V * S;
+
+    let aux = (((H/60)%2) - 1);
+ 
+    let X = C * (1 - (aux < 0 ? aux * -1 : aux));
+
+    let M = V - C;
+
+    if (H >= 0 && H < 60) {
+       hToR = C; 
+       sToG = X;
+       vToB = 0;
+    } else if (H >= 0 && H < 120) {
+       hToR = X; 
+       sToG = C;
+       vToB = 0;
+    } else if (H >= 0 && H < 180) {
+       hToR = 0; 
+       sToG = C;
+       vToB = X;
+    } else if (H >= 0 && H < 240) {
+       hToR = 0; 
+       sToG = X;
+       vToB = C;
+    } else if (H >= 0 && H < 300) {
+       hToR = X; 
+       sToG = 0;
+       vToB = C;
+    } else if (H >= 0 && H < 360) {
+       hToR = C; 
+       sToG = 0;
+       vToB = X;
+    }
+
+    const {r, g, b} = { 
+      r: (hToR + M) * 255,
+      g: (sToG + M) * 255,
+      b: (vToB + M) * 255 
+    };
+    console.log("R " + r + " G " + g + " B " + b);
+
+  }
+
 
   function getMin(...numbers) {
     let min = 99999999;
@@ -105,7 +205,7 @@
       B: document.getElementById('B').value
     };
 
-    transformacoes.forEach(transformacao => console.log(transformacao(R, G, B)));
+    transformacoes.forEach(transformacao => console.log(transformacao, transformacao(R, G, B)));
   }
 
   converter();
