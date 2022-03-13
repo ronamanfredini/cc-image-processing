@@ -126,13 +126,38 @@
        vToB = X;
     }
 
-    const {r, g, b} = { 
-      r: (hToR + M) * 255,
-      g: (sToG + M) * 255,
-      b: (vToB + M) * 255 
+    let {r, g, b} = { 
+      r: (hToR + M),
+      g: (sToG + M),
+      b: (vToB + M) 
     };
-    console.log("R " + r + " G " + g + " B " + b);
 
+    r = Math.round(255 * r);
+    g = Math.round(255 * g);
+    b = Math.round(255 * b);
+    console.log("hsv to RGB: R=" + r + " G=" + g + " B=" + b);
+
+  }
+
+  function converterCmykToRgb() {
+    let { C, M, Y, K} = {
+      C: document.getElementById('C').value / 100,
+      M: document.getElementById('M').value / 100,
+      Y: document.getElementById('Y').value / 100,
+      K: document.getElementById('K').value / 100
+    };
+    C = C * (1 - K) + K;
+    M = M * (1 - K) + K;
+    Y = Y * (1 - K) + K;
+
+    let r = 1 - C;
+    let g = 1 - M;
+    let b = 1 - Y;
+
+    r = Math.round(255 * r);
+    g = Math.round(255 * g);
+    b = Math.round(255 * b);
+    console.log("cmyk para RBG: R=" + r + " G=" + g + " B=" + b);
   }
 
 
