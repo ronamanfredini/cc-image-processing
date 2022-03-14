@@ -1,8 +1,7 @@
 Passo 1: Abrir arquivo index.html no navegador
-Passo 2: Apertar F12 e em sequencia no console para abrir o console do navegador
-Passo 3: Digitar parâmetros do RGB e clicar em converter
-Passo 4: Visualizar no console os parâmetros convertidos de RGB pra hsv, cmyk e escala de cinza
-Passo 5: Digitar parâmetros em hsv e clicar em converter
-Passo 6: Visualizar no console os parâmetros convertidos para rgb
-Passo 7: Digitar parâmetros em cmyk e clicar em converter
-Passo 8: Visualizar no console os parâmetros convertidos para rgb
+Passo 2: Digitar parâmetros do RGB e clicar em converter
+Passo 3: Visualizar no painel de resultados os parâmetros convertidos de RGB pra hsv, cmyk e escala de cinza
+Passo 4: Digitar parâmetros em hsv e clicar em converter
+Passo 5: Visualizar no painel de resultados os parâmetros convertidos para rgb
+Passo 6: Digitar parâmetros em cmyk e clicar em converter
+Passo 7: Visualizar no painel de resultados os parâmetros convertidos para rgb
