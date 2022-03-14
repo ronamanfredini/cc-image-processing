@@ -176,7 +176,9 @@
   }
 
   function rgbParaCinza(r, g, b) {
-    return (r + g + b) / 3;
+    const gray = (r + g + b) / 3;
+    console.log(`rgb para grayscale -> ${gray}`)
+    return gray;
   }
 
   function transformaEntreZeroEUm(r, g, b) {
@@ -203,16 +205,20 @@
     if (maxIdx === 2) {
       h = (h * ((rTransformado - gTransformado) / (max - min))) + 240;
     }
-    return [h, (max - min) / max, max];
+
+    const s = (100 * ((max - min) / max)).toFixed(0)
+    console.log(`RGB para HSV -> ${h} S=${s} V=${(max * 100).toFixed(0)}`);
+    return [h, s, max];
   }
 
   function cmyk(r, g, b) {
     const [rTransformado, gTransformado, bTransformado] = transformaEntreZeroEUm(r, g, b);
     const [max, maxIdx] = getMax(rTransformado, gTransformado, bTransformado);
     const K = 1 - max;
-    const C = (1 - rTransformado - K) / (1 - K);
-    const M = (1 - gTransformado - K) / (1 - K);
-    const Y = (1 - bTransformado - K) / (1 - K);
+    const C = (100 * (1 - rTransformado - K) / (1 - K)).toFixed(0);
+    const M = (100 * (1 - gTransformado - K) / (1 - K)).toFixed(0);
+    const Y = (100 * (1 - bTransformado - K) / (1 - K)).toFixed(0);
+    console.log(`RGB para CMYK -> C=${C} M=${M} Y=${Y} K=${(K * 100).toFixed(0)}`);
     return [C, M, Y, K];
   }
 
@@ -230,9 +236,7 @@
       B: document.getElementById('B').value
     };
 
-    transformacoes.forEach(transformacao => console.log(transformacao, transformacao(R, G, B)));
+    transformacoes.forEach(transformacao => transformacao(R, G, B));
   }
-
-  converter();
 
 </script>
