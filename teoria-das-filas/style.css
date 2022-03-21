@@ -1,0 +1,34 @@
+.bottom-result-labels {
+  margin-top: 32px;
+}
+
+.bottom-result-table {
+  
+}
+.flex {
+  display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.title {
+  margin: 0;
+}
+
+.result-row {
+  width: 100%;
+}
+
+.result-row-labels {
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+.result-box {
+  padding: 4px;
+  padding-right: 30px;
+  margin-left: 3px;
+  border: 1px solid black;
+}

@@ -1,0 +1,145 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Teoria das filas</title>
+</head>
+
+<body>
+  <div>
+    <div>
+      <label for="">Tempo a ser simulado (minutos)</label>
+      <input />
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div>
+              <label>Chegadas (λ)</label>
+            </div>
+          </td>
+          <td><input type="text" /></td>
+          <td><input type="text" /></td>
+          <td><input type="text" /></td>
+        </tr>
+        <tr>
+          <td>
+            <div>
+              <label>Serviço (μ)</label>
+            </div>
+          </td>
+          <td><input type="text" /></td>
+          <td><input type="text" /></td>
+          <td><input type="text" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div>
+              <label>Chegadas (λ)</label>
+            </div>
+          </td>
+          <td><input type="text" /></td>
+          <td><input type="text" /></td>
+          <td><input type="text" /></td>
+        </tr>
+        <tr>
+          <td>
+            <div>
+              <label>Serviço (μ)</label>
+            </div>
+          </td>
+          <td><input type="text" /></td>
+          <td><input type="text" /></td>
+          <td><input type="text" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+    <button>Simular</button>
+
+    <div class="bottom-result">
+      <div class="bottom-result-labels inline-flex">
+        <div class="">
+          <div class="flex result-row">
+            <p class="title">Número médio de carros no sistema</p>
+            <span>L = λ / (μ - λ)</span>
+            <div></div>
+          </div>
+
+          <div class="flex result-row">
+            <p class="title">Tempo médio despendido no sistema</p>
+            <span>W = 1 / (μ - λ)</span>
+            <div></div>
+          </div>
+
+          <div class="flex result-row">
+            <p class="title">Taxa média de ocupação do servidor</p>
+            <span>&rho; = λ / μ</span>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-result-table inline-flex">
+        <div>
+          <div class="flex result-row-labels">
+            <div>A</div>
+            <div>B</div>
+            <div>C</div>
+          </div>
+          <div class="flex result-row">
+            <div class="result-box">1</div>
+            <div class="result-box">2</div>
+            <div class="result-box">3</div>
+          </div>
+
+          <div class="flex result-row">
+            <div class="result-box">1</div>
+            <div class="result-box">2</div>
+            <div class="result-box">3</div>
+          </div>
+
+          <div class="flex result-row">
+            <div class="result-box">1</div>
+            <div class="result-box">2</div>
+            <div class="result-box">3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+<!-- COLUNAS N, P, A, B, C -->
+</html>
