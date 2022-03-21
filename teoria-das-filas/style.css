@@ -21,6 +21,10 @@
   width: 100%;
 }
 
+.result-row-formulae {
+  margin-top: 20px;
+}
+
 .result-row-labels {
   width: 100%;
   justify-content: space-around;
@@ -31,4 +35,18 @@
   padding-right: 30px;
   margin-left: 3px;
   border: 1px solid black;
+}
+
+.result-table {
+  margin-left: 100px;
+}
+
+.result-table table {
+  text-align: center;
+}
+
+.result-table table td {
+  border: 1px solid black;
+  padding: 10px;
+
 }
