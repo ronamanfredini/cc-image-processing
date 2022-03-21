@@ -65,6 +65,13 @@
       </div>
     </div>
   </div>
+  <div>
+    <h2>Painel de Resultados</h2>
+    <textarea id="result-panel" style="width: 600px; height: 150px" readonly></textarea>
+  </div>
+  <div>
+    <button onclick="clearPanel()">Limpar Painel</button>
+  </div>
 </body>
 <script>
 
@@ -135,8 +142,8 @@
     r = Math.round(255 * r);
     g = Math.round(255 * g);
     b = Math.round(255 * b);
-    console.log("hsv to RGB: R=" + r + " G=" + g + " B=" + b);
-
+    console.log(`HSV to RGB: R=${r} G=${g} B=${b}`);
+    printMessageOnPanel(`HSV to RGB: R=${r} G=${g} B=${b}`);
   }
 
   function converterCmykToRgb() {
@@ -157,7 +164,8 @@
     r = Math.round(255 * r);
     g = Math.round(255 * g);
     b = Math.round(255 * b);
-    console.log("cmyk para RBG: R=" + r + " G=" + g + " B=" + b);
+    console.log(`CMYK para RBG: R=${r} G=${g} B=${b}`);
+    printMessageOnPanel(`CMYK para RBG: R=${r} G=${g} B=${b}`);
   }
 
 
@@ -177,7 +185,9 @@
 
   function rgbParaCinza(r, g, b) {
     const gray = (r + g + b) / 3;
-    console.log(`rgb para grayscale -> ${gray}`)
+    console.log(`RGB para grayscale -> ${gray}`);
+    printMessageOnPanel(`RGB para grayscale -> ${gray}`);
+
     return gray;
   }
 
@@ -208,6 +218,7 @@
 
     const s = (100 * ((max - min) / max)).toFixed(0)
     console.log(`RGB para HSV -> ${h} S=${s} V=${(max * 100).toFixed(0)}`);
+    printMessageOnPanel(`RGB para HSV -> ${h} S=${s} V=${(max * 100).toFixed(0)}`);
     return [h, s, max];
   }
 
@@ -219,6 +230,7 @@
     const M = (100 * (1 - gTransformado - K) / (1 - K)).toFixed(0);
     const Y = (100 * (1 - bTransformado - K) / (1 - K)).toFixed(0);
     console.log(`RGB para CMYK -> C=${C} M=${M} Y=${Y} K=${(K * 100).toFixed(0)}`);
+    printMessageOnPanel(`RGB para CMYK -> C=${C} M=${M} Y=${Y} K=${(K * 100).toFixed(0)}`);
     return [C, M, Y, K];
   }
 
@@ -237,6 +249,16 @@
     };
 
     transformacoes.forEach(transformacao => transformacao(R, G, B));
+  }
+
+  function printMessageOnPanel(message) {
+    let textarea = document.getElementById("result-panel");
+    textarea.value += `${message}\n`;
+  }
+
+  function clearPanel(){
+    let textarea = document.getElementById("result-panel");
+    textarea.value = '';
   }
 
 </script>
