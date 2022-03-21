@@ -9,137 +9,161 @@
 </head>
 
 <body>
-  <div>
+  <div class="flex">
     <div>
-      <label for="">Tempo a ser simulado (minutos)</label>
-      <input />
+      <div>
+        <label for="">Tempo a ser simulado (minutos)</label>
+        <input id="tempo"/>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div>
+                <label>Chegadas (λ)</label>
+              </div>
+            </td>
+            <td><input type="text" id="chegadas-1-a" /></td>
+            <td><input type="text" id="chegadas-1-b"/></td>
+            <td><input type="text" id="chegadas-1-c"/></td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <label>Serviço (μ)</label>
+              </div>
+            </td>
+            <td><input type="text" id="servico-1-a" /></td>
+            <td><input type="text" id="servico-1-b"/></td>
+            <td><input type="text" id="servico-1-c"/></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div>
+                <label>Chegadas (λ)</label>
+              </div>
+            </td>
+            <td><input type="text" id="chegadas-2-a" /></td>
+            <td><input type="text" id="chegadas-2-b"/></td>
+            <td><input type="text" id="chegadas-2-c"/></td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <label>Serviço (μ)</label>
+              </div>
+            </td>
+            <td><input type="text" id="servico-2-a" /></td>
+            <td><input type="text" id="servico-2-b"/></td>
+            <td><input type="text" id="servico-2-c"/></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+
+      <button onclick="run()">Simular</button>
+
+      <div class="bottom-result">
+        <div class="bottom-result-labels inline-flex">
+          <div class="">
+            <div class="flex result-row result-row-formulae">
+              <p class="title">Número médio de carros no sistema</p>
+              <span>L = λ / (μ - λ)</span>
+              <div></div>
+            </div>
+
+            <div class="flex result-row result-row-formulae">
+              <p class="title">Tempo médio despendido no sistema</p>
+              <span>W = 1 / (μ - λ)</span>
+              <div></div>
+            </div>
+
+            <div class="flex result-row result-row-formulae">
+              <p class="title">Taxa média de ocupação do servidor</p>
+              <span>&rho; = λ / μ</span>
+              <div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-result-table inline-flex">
+          <div>
+            <div class="flex result-row-labels">
+              <div>A</div>
+              <div>B</div>
+              <div>C</div>
+            </div>
+            <div class="flex result-row">
+              <div class="result-box">1</div>
+              <div class="result-box">2</div>
+              <div class="result-box">3</div>
+            </div>
+
+            <div class="flex result-row">
+              <div class="result-box">1</div>
+              <div class="result-box">2</div>
+              <div class="result-box">3</div>
+            </div>
+
+            <div class="flex result-row">
+              <div class="result-box">1</div>
+              <div class="result-box">2</div>
+              <div class="result-box">3</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th>A</th>
-          <th>B</th>
-          <th>C</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div>
-              <label>Chegadas (λ)</label>
-            </div>
-          </td>
-          <td><input type="text" /></td>
-          <td><input type="text" /></td>
-          <td><input type="text" /></td>
-        </tr>
-        <tr>
-          <td>
-            <div>
-              <label>Serviço (μ)</label>
-            </div>
-          </td>
-          <td><input type="text" /></td>
-          <td><input type="text" /></td>
-          <td><input type="text" /></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <br>
-
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th>A</th>
-          <th>B</th>
-          <th>C</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div>
-              <label>Chegadas (λ)</label>
-            </div>
-          </td>
-          <td><input type="text" /></td>
-          <td><input type="text" /></td>
-          <td><input type="text" /></td>
-        </tr>
-        <tr>
-          <td>
-            <div>
-              <label>Serviço (μ)</label>
-            </div>
-          </td>
-          <td><input type="text" /></td>
-          <td><input type="text" /></td>
-          <td><input type="text" /></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <br>
-
-    <button>Simular</button>
-
-    <div class="bottom-result">
-      <div class="bottom-result-labels inline-flex">
-        <div class="">
-          <div class="flex result-row">
-            <p class="title">Número médio de carros no sistema</p>
-            <span>L = λ / (μ - λ)</span>
-            <div></div>
-          </div>
-
-          <div class="flex result-row">
-            <p class="title">Tempo médio despendido no sistema</p>
-            <span>W = 1 / (μ - λ)</span>
-            <div></div>
-          </div>
-
-          <div class="flex result-row">
-            <p class="title">Taxa média de ocupação do servidor</p>
-            <span>&rho; = λ / μ</span>
-            <div></div>
-          </div>
-        </div>
+    <div class="result-table">
+      <div>
+        <label for="">Probabilidade de clientes (MAX)</label>
+        <input id="client-max-prob" type="text">
       </div>
-
-      <div class="bottom-result-table inline-flex">
-        <div>
-          <div class="flex result-row-labels">
-            <div>A</div>
-            <div>B</div>
-            <div>C</div>
-          </div>
-          <div class="flex result-row">
-            <div class="result-box">1</div>
-            <div class="result-box">2</div>
-            <div class="result-box">3</div>
-          </div>
-
-          <div class="flex result-row">
-            <div class="result-box">1</div>
-            <div class="result-box">2</div>
-            <div class="result-box">3</div>
-          </div>
-
-          <div class="flex result-row">
-            <div class="result-box">1</div>
-            <div class="result-box">2</div>
-            <div class="result-box">3</div>
-          </div>
-        </div>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>N</th>
+            <th>P(x)</th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+          </tr>
+        </thead>
+        <tbody id="result-table">
+          <tr>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </body>
 
+<script src="script.js"></script>
 
-<!-- COLUNAS N, P, A, B, C -->
 </html>
