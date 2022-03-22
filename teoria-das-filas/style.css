@@ -15,6 +15,7 @@
 
 .title {
   margin: 0;
+  font-size: 20px;
 }
 
 .result-row {
@@ -23,6 +24,15 @@
 
 .result-row-formulae {
   margin-top: 20px;
+}
+
+.result-row-formulae span{
+ font-size: 20px;
+ margin-left: 10px;
+ padding-left: 5px;
+ padding-right: 5px;
+ background-color: aquamarine;
+ border-radius: 5%;
 }
 
 .result-row-labels {
