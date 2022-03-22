@@ -13,7 +13,7 @@
     <div>
       <div>
         <label for="">Tempo a ser simulado (minutos)</label>
-        <input id="tempo"/>
+        <input id="tempo" />
       </div>
 
       <table>
@@ -33,8 +33,8 @@
               </div>
             </td>
             <td><input type="text" id="chegadas-1-a" /></td>
-            <td><input type="text" id="chegadas-1-b"/></td>
-            <td><input type="text" id="chegadas-1-c"/></td>
+            <td><input type="text" id="chegadas-1-b" /></td>
+            <td><input type="text" id="chegadas-1-c" /></td>
           </tr>
           <tr>
             <td>
@@ -43,11 +43,12 @@
               </div>
             </td>
             <td><input type="text" id="servico-1-a" /></td>
-            <td><input type="text" id="servico-1-b"/></td>
-            <td><input type="text" id="servico-1-c"/></td>
+            <td><input type="text" id="servico-1-b" /></td>
+            <td><input type="text" id="servico-1-c" /></td>
           </tr>
         </tbody>
       </table>
+      <button onclick="run()">Simular</button>
 
       <br>
 
@@ -68,8 +69,8 @@
               </div>
             </td>
             <td><input type="text" id="chegadas-2-a" /></td>
-            <td><input type="text" id="chegadas-2-b"/></td>
-            <td><input type="text" id="chegadas-2-c"/></td>
+            <td><input type="text" id="chegadas-2-b" /></td>
+            <td><input type="text" id="chegadas-2-c" /></td>
           </tr>
           <tr>
             <td>
@@ -78,15 +79,13 @@
               </div>
             </td>
             <td><input type="text" id="servico-2-a" /></td>
-            <td><input type="text" id="servico-2-b"/></td>
-            <td><input type="text" id="servico-2-c"/></td>
+            <td><input type="text" id="servico-2-b" /></td>
+            <td><input type="text" id="servico-2-c" /></td>
           </tr>
         </tbody>
       </table>
 
-      <br>
 
-      <button onclick="run()">Simular</button>
 
       <div class="bottom-result">
         <div class="bottom-result-labels inline-flex">
@@ -119,21 +118,21 @@
               <div>C</div>
             </div>
             <div class="flex result-row">
-              <div class="result-box">1</div>
-              <div class="result-box">2</div>
-              <div class="result-box">3</div>
+              <div id="carros-sistema-a" class="result-box"></div>
+              <div id="carros-sistema-b" class="result-box"></div>
+              <div id="carros-sistema-c" class="result-box"></div>
             </div>
 
             <div class="flex result-row">
-              <div class="result-box">1</div>
-              <div class="result-box">2</div>
-              <div class="result-box">3</div>
+              <div id="tempo-despendido-sistema-a" class="result-box"></div>
+              <div id="tempo-despendido-sistema-b" class="result-box"></div>
+              <div id="tempo-despendido-sistema-c" class="result-box"></div>
             </div>
 
             <div class="flex result-row">
-              <div class="result-box">1</div>
-              <div class="result-box">2</div>
-              <div class="result-box">3</div>
+              <div id="taxa-media-a" class="result-box"></div>
+              <div id="taxa-media-b" class="result-box"></div>
+              <div id="taxa-media-c" class="result-box"></div>
             </div>
           </div>
         </div>
@@ -164,6 +163,7 @@
   </div>
 </body>
 
+<script src="formulas.js"></script>
 <script src="script.js"></script>
 
 </html>

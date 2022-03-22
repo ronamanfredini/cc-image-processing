@@ -1,5 +1,9 @@
 class Formulas {
-	
+
+	static converteParaHoras(valor) {
+		return 60 / valor;
+	}
+
 	static taxaMediaDeUtilizacao(chegada, servico) {
 		return chegada / servico;
 	}
