@@ -4,88 +4,96 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <title>Teoria das filas</title>
 </head>
 
 <body>
-  <div class="flex">
-    <div>
-      <div>
-        <label for="">Tempo a ser simulado (minutos)</label>
-        <input id="tempo" />
+  <div class="container">
+    <h1>Teoria das Filas</h1>
+      <div class="row">
+        <div class="input-field col s3">
+          <label for="tempoSimulado">Tempo a ser simulado (minutos)</label>
+          <input id="tempoSimulado" type="text"/>
+        </div>
       </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>A</th>
-            <th>B</th>
-            <th>C</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div>
-                <label>Chegadas (λ)</label>
-              </div>
-            </td>
-            <td><input type="text" id="chegadas-1-a" /></td>
-            <td><input type="text" id="chegadas-1-b" /></td>
-            <td><input type="text" id="chegadas-1-c" /></td>
-          </tr>
-          <tr>
-            <td>
-              <div>
-                <label>Serviço (μ)</label>
-              </div>
-            </td>
-            <td><input type="text" id="servico-1-a" /></td>
-            <td><input type="text" id="servico-1-b" /></td>
-            <td><input type="text" id="servico-1-c" /></td>
-          </tr>
-        </tbody>
-      </table>
-      <button onclick="run()">Simular</button>
-
-      <br>
-
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>A</th>
-            <th>B</th>
-            <th>C</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div>
-                <label>Chegadas (λ)</label>
-              </div>
-            </td>
-            <td><input type="text" id="chegadas-2-a" /></td>
-            <td><input type="text" id="chegadas-2-b" /></td>
-            <td><input type="text" id="chegadas-2-c" /></td>
-          </tr>
-          <tr>
-            <td>
-              <div>
-                <label>Serviço (μ)</label>
-              </div>
-            </td>
-            <td><input type="text" id="servico-2-a" /></td>
-            <td><input type="text" id="servico-2-b" /></td>
-            <td><input type="text" id="servico-2-c" /></td>
-          </tr>
-        </tbody>
-      </table>
-
-
+      <div class="row">
+        <div class="col s5">
+          <div class="row">
+            <h5>Chegadas (λ)</h5>
+            <div class="input-field col s4">
+              <label for="chegadasInputA">A</label>
+              <input id="chegadasInputA" type="text" />
+            </div>
+            <div class="input-field col s4">
+              <label for="chegadasInputB">B</label>
+              <input id="chegadasInputB" type="text" />
+            </div>
+            <div class="input-field col s4">
+              <label for="chegadasInputC">C</label>
+              <input id="chegadasInputC" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <h5>Serviço (μ)</h5>
+            <div class="input-field col s4">
+              <label for="servicoInputA">A</label>
+              <input id="servicoInputA" type="text" />
+            </div>
+            <div class="input-field col s4">
+              <label for="servicoInputB">B</label>
+              <input id="servicoInputB" type="text" />
+            </div>
+            <div class="input-field col s4">
+              <label for="servicoInputC">C</label>
+              <input id="servicoInputC" type="text" />
+            </div>
+          </div>
+          <button onclick="run()">Simular</button>
+        </div>
+        <div class="col s2">
+          <i class="large material-icons">arrow_forward</i>
+          <i class="large material-icons">arrow_forward</i>
+          <i class="large material-icons">arrow_forward</i>
+        </div>
+        <div class="col s5">
+          <div class="row">
+            <h5>Chegadas (λ)</h5>
+            <div class="input-field col s4">
+              <label for="chegadasResponseA">A</label>
+              <input id="chegadasResponseA" type="text" />
+            </div>
+            <div class="input-field col s4">
+              <label for="chegadasResponseB">B</label>
+              <input id="chegadasResponseB" type="text" />
+            </div>
+            <div class="input-field col s4">
+              <label for="chegadasResponseC">C</label>
+              <input id="chegadasResponseC" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <h5>Serviço (μ)</h5>
+            <div class="input-field col s4">
+              <label for="servicoResponseA">A</label>
+              <input id="servicoResponseA" type="text" />
+            </div>
+            <div class="input-field col s4">
+              <label for="servicoResponseB">B</label>
+              <input id="servicoResponseB" type="text" />
+            </div>
+            <div class="input-field col s4">
+              <label for="servicoResponseC">C</label>
+              <input id="servicoResponseC" type="text" />
+            </div>
+          </div>
+        </div>
+      </div>
+      
 
       <div class="bottom-result">
         <div class="bottom-result-labels inline-flex">
@@ -118,21 +126,21 @@
               <div>C</div>
             </div>
             <div class="flex result-row">
-              <div id="carros-sistema-a" class="result-box"></div>
-              <div id="carros-sistema-b" class="result-box"></div>
-              <div id="carros-sistema-c" class="result-box"></div>
+              <div id="carros-sistema-a" class="result-box">1</div>
+              <div id="carros-sistema-b" class="result-box">2</div>
+              <div id="carros-sistema-c" class="result-box">3</div>
             </div>
 
             <div class="flex result-row">
-              <div id="tempo-despendido-sistema-a" class="result-box"></div>
-              <div id="tempo-despendido-sistema-b" class="result-box"></div>
-              <div id="tempo-despendido-sistema-c" class="result-box"></div>
+              <div id="tempo-despendido-sistema-a" class="result-box">1</div>
+              <div id="tempo-despendido-sistema-b" class="result-box">2</div>
+              <div id="tempo-despendido-sistema-c" class="result-box">3</div>
             </div>
 
             <div class="flex result-row">
-              <div id="taxa-media-a" class="result-box"></div>
-              <div id="taxa-media-b" class="result-box"></div>
-              <div id="taxa-media-c" class="result-box"></div>
+              <div id="taxa-media-a" class="result-box">1</div>
+              <div id="taxa-media-b" class="result-box">2</div>
+              <div id="taxa-media-c" class="result-box">3</div>
             </div>
           </div>
         </div>
@@ -154,12 +162,12 @@
           </tr>
         </thead>
         <tbody id="result-table">
-          <tr>
-            <td>1</td>
-          </tr>
+          <tr>1</tr>
+          <tr>1</tr>
+          <tr>1</tr>
+          <tr>1</tr>
         </tbody>
       </table>
-    </div>
   </div>
 </body>
 

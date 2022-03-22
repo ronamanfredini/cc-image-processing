@@ -1,16 +1,16 @@
 function getChegadas() {
   return {
-    a: document.getElementById('chegadas-1-a').value,
-    b: document.getElementById('chegadas-1-b').value,
-    c: document.getElementById('chegadas-1-c').value
+    a: document.getElementById('chegadasInputA').value,
+    b: document.getElementById('chegadasInputB').value,
+    c: document.getElementById('chegadasInputC').value
   }
 }
 
 function getServicos() {
   return {
-    a: document.getElementById('servico-1-a').value,
-    b: document.getElementById('servico-1-b').value,
-    c: document.getElementById('servico-1-c').value
+    a: document.getElementById('servicoInputA').value,
+    b: document.getElementById('servicoInputB').value,
+    c: document.getElementById('servicoInputC').value
   };
 }
 
@@ -32,13 +32,13 @@ function buildCell() {
 }
 
 function buildTabelaConverterHoras(data) {
-  document.getElementById('chegadas-2-a').value = Formulas.converteParaHoras(data.arrivals.a);
-  document.getElementById('chegadas-2-b').value = Formulas.converteParaHoras(data.arrivals.b);
-  document.getElementById('chegadas-2-c').value = Formulas.converteParaHoras(data.arrivals.c);
+  document.getElementById('chegadasResponseA').value = Formulas.converteParaHoras(data.arrivals.a);
+  document.getElementById('chegadasResponseB').value = Formulas.converteParaHoras(data.arrivals.b);
+  document.getElementById('chegadasResponseC').value = Formulas.converteParaHoras(data.arrivals.c);
 
-  document.getElementById('servico-2-a').value = Formulas.converteParaHoras(data.services.a);
-  document.getElementById('servico-2-b').value = Formulas.converteParaHoras(data.services.b);
-  document.getElementById('servico-2-c').value = Formulas.converteParaHoras(data.services.c);
+  document.getElementById('servicoResponseA').value = Formulas.converteParaHoras(data.services.a);
+  document.getElementById('servicoResponseB').value = Formulas.converteParaHoras(data.services.b);
+  document.getElementById('servicoResponseC').value = Formulas.converteParaHoras(data.services.c);
 }
 
 function buildTableDeBaixo(data) {
@@ -66,4 +66,12 @@ function run() {
   buildTabelaConverterHoras(data);
   buildTableDeBaixo(data);
   buildResultTable(data);
+  updateTextFields();
 }
+
+function updateTextFields() {
+    $(document).ready(function() {
+        M.updateTextFields();
+    });
+}
+updateTextFields();
