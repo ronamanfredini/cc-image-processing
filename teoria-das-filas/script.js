@@ -1,16 +1,16 @@
 function getChegadas() {
-  return {
-    a: document.getElementById('chegadasInputA').value,
-    b: document.getElementById('chegadasInputB').value,
-    c: document.getElementById('chegadasInputC').value
-  }
+  return{
+    a: Formulas.converteParaHoras(document.getElementById('chegadasInputA').value),
+    b: Formulas.converteParaHoras(document.getElementById('chegadasInputB').value),
+    c: Formulas.converteParaHoras(document.getElementById('chegadasInputC').value)
+  };
 }
 
 function getServicos() {
   return {
-    a: document.getElementById('servicoInputA').value,
-    b: document.getElementById('servicoInputB').value,
-    c: document.getElementById('servicoInputC').value
+    a: Formulas.converteParaHoras(document.getElementById('servicoInputA').value),
+    b: Formulas.converteParaHoras(document.getElementById('servicoInputB').value),
+    c: Formulas.converteParaHoras(document.getElementById('servicoInputC').value)
   };
 }
 
@@ -18,27 +18,42 @@ function buildResultTable({ clientMaxProbability, arrivals, services }) {
   const resultTable = document.getElementById('result-table');
   resultTable.innerHTML = null;
   for (let i = 0; i < clientMaxProbability; i++) {
-    const row = buildRow();
-
+    const row = buildRow(arrivals, services, i);
+    resultTable.append(row);
   }
 }
 
-function buildRow() {
+function buildRow(arrivals, services, i) {
+   let row = document.createElement('tr');
+   
+   const cells = [
+    buildCell(i),
+	  buildCell(`P(${i})`),
+	  buildCell(Formulas.probabilidadeNClientesNoLocal(arrivals.a, services.a, i)),
+	  buildCell(Formulas.probabilidadeNClientesNoLocal(arrivals.b, services.b, i)),
+	  buildCell(Formulas.probabilidadeNClientesNoLocal(arrivals.c, services.c, i))
+   ];
 
+   cells.forEach(cell => row.append(cell));
+
+   return row;
 }
 
-function buildCell() {
+function buildCell(value) {
+  let cell = document.createElement('td');
+  cell.append(value);
 
+  return cell;
 }
 
-function buildTabelaConverterHoras(data) {
-  document.getElementById('chegadasResponseA').value = Formulas.converteParaHoras(data.arrivals.a);
-  document.getElementById('chegadasResponseB').value = Formulas.converteParaHoras(data.arrivals.b);
-  document.getElementById('chegadasResponseC').value = Formulas.converteParaHoras(data.arrivals.c);
+function buildTabelaHoras(data) {
+  document.getElementById('chegadasResponseA').value = data.arrivals.a;
+  document.getElementById('chegadasResponseB').value = data.arrivals.b;
+  document.getElementById('chegadasResponseC').value = data.arrivals.c;
 
-  document.getElementById('servicoResponseA').value = Formulas.converteParaHoras(data.services.a);
-  document.getElementById('servicoResponseB').value = Formulas.converteParaHoras(data.services.b);
-  document.getElementById('servicoResponseC').value = Formulas.converteParaHoras(data.services.c);
+  document.getElementById('servicoResponseA').value = data.services.a;
+  document.getElementById('servicoResponseB').value = data.services.b;
+  document.getElementById('servicoResponseC').value = data.services.c;
 }
 
 function buildTableDeBaixo(data) {
@@ -60,10 +75,10 @@ function run() {
     clientMaxProbability: document.getElementById('client-max-prob').value,
     time: document.getElementById('tempo'),
     arrivals: getChegadas(),
-    services: getServicos()
+    services: getServicos(),
   }
 
-  buildTabelaConverterHoras(data);
+  buildTabelaHoras(data);
   buildTableDeBaixo(data);
   buildResultTable(data);
   updateTextFields();
