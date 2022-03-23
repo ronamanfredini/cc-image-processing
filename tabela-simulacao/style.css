@@ -1,0 +1,70 @@
+.bottom-result-labels {
+  margin-top: 32px;
+}
+
+.bottom-result-table {
+  
+}
+.flex {
+  display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+}
+
+.result-row {
+  width: 100%;
+}
+
+.result-row-formulae {
+  margin-top: 20px;
+}
+
+.result-row-formulae span{
+ font-size: 20px;
+ margin-left: 10px;
+ padding-left: 5px;
+ padding-right: 5px;
+ background-color: aquamarine;
+ border-radius: 5%;
+}
+
+.result-row-labels {
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+.result-box {
+  padding: 4px;
+  padding-right: 30px;
+  margin-left: 3px;
+  border: 1px solid black;
+}
+
+.result-table {
+  margin-left: 100px;
+}
+
+.result-table table {
+  text-align: center;
+}
+
+.result-table table td {
+  border: 1px solid black;
+  padding: 10px;
+
+}
+
+.separator {
+  margin-left: 80px;
+}
+
+.result-table-outer {
+  margin-top: 30px;
+}

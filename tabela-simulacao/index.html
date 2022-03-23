@@ -1,0 +1,51 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css"">
+</head>
+
+<body>
+	<div class="flex">
+	<div class="separator">
+		<div class="flex">
+			<label>Tempo de Simulação (em minutos):</label>
+			<input id="tempo">
+		</div>
+		<div class="flex">
+			<button onclick="run()">Simular...</button>
+			<button onclick="clear()">Limpar...</button>
+		</div>
+	</div>
+	<div class="separator">
+		<label>TECs</label>
+		<textarea id="tec"></textarea>
+	</div>
+	<div class="separator">
+		<label>TSs</label>
+		<textarea id="ts"></textarea>
+	</div>
+	</div>
+	<table class="result-table-outer">
+		<thead>
+			<tr>
+				<th>Cliente</th>
+				<th>Tempo desde a última chegada (minutos)</th>
+				<th>Tempo de Chegada no Relógio</th>
+				<th>Tempo de início do serviço no relógio</th>
+				<th>Tempo do cliente na fila (minutos)</th>
+				<th>Tempo Final do serviço no relógio</th>
+				<th>Tempo do cliente no sistema (minutos)</th>
+				<th>Tempo livre do operador (minutos)</th>
+			</tr>
+		</thead>
+		<tbody id="result-table">
+		</tbody>
+	</table>
+	</body>
+	<script src="script.js"></script>
+
+</html>
