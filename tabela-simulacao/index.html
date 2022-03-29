@@ -7,32 +7,38 @@
 	<title>Document</title>
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>	
 </head>
 
 <body>
 	<div class="flex">
 	<div class="separator">
 		<div class="flex">
-			<label>Tempo de Simulação (em minutos):</label>
-			<input id="tempo">
+			<div class="input-field col s6">
+				<input id="tempo"type="text" class="validate">
+				<label for="tempo">Tempo de Simulação (em minutos):</label>
+			  </div>
 		</div>
 		<div class="flex">
-			<button onclick="run()">Simular...</button>
-			<button onclick="clear()">Limpar...</button>
+			<a class="waves-effect waves-light btn" onclick="run()">Simular...</a>
+			<a class="waves-effect red btn" onclick="clearPage()">Limpar...</a>
 		</div>
 	</div>
 	<div class="separator">
-		<label>TECs</label>
-		<textarea id="tec"></textarea>
+		<div class="input-field col s12">
+			<label for="tec">TECs</label>
+			<textarea id="tec" class="materialize-textarea"></textarea>
+		</div>
 	</div>
 	<div class="separator">
-		<label>TSs</label>
-		<textarea id="ts"></textarea>
+		<div class="input-field col s12">
+			<label for="ts">TSs</label>
+			<textarea id="ts" class="materialize-textarea"></textarea>
+		</div>
 	</div>
 	</div>
 	<div class="container">
-		<table id="result-table" class="result-table-outer">
+		<table class="result-table-outer">
 			<thead>
 				<tr>
 					<th>Cliente</th>
@@ -49,8 +55,35 @@
 			<tbody id="result-table">
 			</tbody>
 		</table>
+		<div class="final-table" style="margin-top: 125px;">
+			<h5>Resultado Final</h5>
+			<table>
+				<tbody>
+					<tr id="wait-time-on-queue">
+						<th>Tempo médio de espera na Fila</th>
+					</tr>
+					<tr id="probability-wait-client-on-queue">
+						<th>Probabilidade de um cliente esperar na fila</th>
+					</tr>
+					<tr id="probability-free-operator">
+						<th>Probabilidade de Operador Livre</th>
+					</tr>
+					<tr id="medium-time-service">
+						<th>Tempo médio de Serviço</th>
+					</tr>
+					<tr id="medium-time-out-sistem">
+						<th>Tempo médio Despendido no Sistema</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	</body>
 	<script src="script.js"></script>
     <script src="simulaTabela.js"></script>
+	<script>
+		window.onload = function() {
+			M.updateTextFields();
+		};
+	</script>
 </html>
