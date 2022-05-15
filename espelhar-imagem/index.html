@@ -39,7 +39,7 @@
     canvas.height = imgHeight;
     const context = canvas.getContext('2d');
     const typedArray = new Uint8ClampedArray(img.length);
-    for (let i = 0; i < img.length - 4; i+= 4) {
+    for (let i = 0; i < img.length - 4; i += 4) {
       typedArray[i] = img[i];
       typedArray[i+ 1] = img[i + 1];
       typedArray[i + 2] = img[i + 2];
@@ -53,23 +53,38 @@
     document.getElementById('canvas-wrapper').appendChild(wrapper);
   }
 
+  function flatten(arr) {
+    return arr.reduce((acc, curr) => acc = [...acc, ...curr], []);
+  }
+
   async function submit() {
     const [data1, data2] = await Promise.all([
       getImageData('file1', 'img1')
     ]);
 
-    const mirrorResult = mirror(data1.imgData);
-    console.log(mirrorResult, data1.width, data1.height)
-    draw(mirrorResult, 'mirror', data1.width, data1.height);
+    const mirrorResult = mirror(data1.imgData, data1.width);
+    const test = flatten(mirrorResult);
+    draw(test, 'mirror', data1.width, data1.height);
   }
 
-  function mirror(matrix1) {
-    const result = [];
-    for (let i = matrix1.length - 1; i > 0; i--) {
-      result[i] = matrix1[i];
+  function flipLine(line) {
+    const flippedLine = [];
+    for (let i = line.length - 4; i >= 0; i -= 4) {
+      const pixel = line.slice(i, i + 4);
+      pixel.forEach(pxValue => flippedLine.push(pxValue));
     }
 
-    return resolveOverflow(result);
+    return flippedLine;
+  }
+
+  function mirror(matrix, imgWidth) {
+    console.log('original mtx', matrix.length)
+    const separateIntoLines = [];
+    for (let i = 0; i < matrix.length; i += imgWidth * 4) {
+      separateIntoLines.push(matrix.slice(i, i + imgWidth * 4));
+    }
+
+    return separateIntoLines.map(line => flipLine(line));
   }
 
   function getImageData(inputId, imgId) {
