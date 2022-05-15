@@ -58,13 +58,14 @@
   }
 
   async function submit() {
-    const [data1, data2] = await Promise.all([
+    const [data1] = await Promise.all([
       getImageData('file1', 'img1')
     ]);
 
     const mirrorResult = mirror(data1.imgData, data1.width);
-    const test = flatten(mirrorResult);
-    draw(test, 'mirror', data1.width, data1.height);
+    draw(mirrorResult, 'mirror', data1.width, data1.height);
+    const concatResult = concatImage(data1.imgData, mirrorResult, data1.width);
+    draw(concatResult, 'mirror & concat', data1.width * 2, data1.height);
   }
 
   function flipLine(line) {
@@ -77,14 +78,33 @@
     return flippedLine;
   }
 
-  function mirror(matrix, imgWidth) {
-    console.log('original mtx', matrix.length)
-    const separateIntoLines = [];
+  function separateMatrixIntoLines(matrix, imgWidth) {
+    const result = [];
     for (let i = 0; i < matrix.length; i += imgWidth * 4) {
-      separateIntoLines.push(matrix.slice(i, i + imgWidth * 4));
+      result.push(matrix.slice(i, i + imgWidth * 4));
     }
 
-    return separateIntoLines.map(line => flipLine(line));
+    return result;
+  }
+
+  function mirror(matrix, imgWidth) {
+    const lineSeparated = separateMatrixIntoLines(matrix, imgWidth);
+    const flipped = lineSeparated.map(line => flipLine(line));
+    const flattened = flatten(flipped);
+
+    return flattened;
+  }
+
+  function concatImage(img1, img2, imgWidth) {
+    const [lineSeparated1, lineSeparated2] = [
+      separateMatrixIntoLines(img1, imgWidth), 
+      separateMatrixIntoLines(img2, imgWidth)
+    ];
+
+    const concat = lineSeparated1.map((line, idx) => [...line, ...lineSeparated2[idx]]);
+    const flattened = flatten(concat);
+
+    return flattened;
   }
 
   function getImageData(inputId, imgId) {
