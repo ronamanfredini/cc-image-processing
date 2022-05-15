@@ -90,9 +90,8 @@
   function mirror(matrix, imgWidth) {
     const lineSeparated = separateMatrixIntoLines(matrix, imgWidth);
     const flipped = lineSeparated.map(line => flipLine(line));
-    const flattened = flatten(flipped);
 
-    return flattened;
+    return flatten(flipped);
   }
 
   function concatImage(img1, img2, imgWidth) {
@@ -100,11 +99,9 @@
       separateMatrixIntoLines(img1, imgWidth), 
       separateMatrixIntoLines(img2, imgWidth)
     ];
-
     const concat = lineSeparated1.map((line, idx) => [...line, ...lineSeparated2[idx]]);
-    const flattened = flatten(concat);
 
-    return flattened;
+    return flatten(concat);
   }
 
   function getImageData(inputId, imgId) {
