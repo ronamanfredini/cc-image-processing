@@ -19,12 +19,11 @@
   <img src="" id="img1" alt="">
   <img src="" id="img2" alt="">
 
-
   <br>
   <br>
 
   <h1>Resultado:</h1>
-  <div id="canvas-wrapper" style="width: 512; height: 512"></div>
+  <div id="canvas-wrapper"></div>
 
 </body>
 
@@ -33,15 +32,15 @@
   const resolveOverflow = img => img.map(pixel => pixel > 255? pixel % 255: pixel);
   const resolveUnderflow = img => img.map(pixel => pixel < 0? 0: pixel);
 
-  function draw(img, labelText) {
+  function draw(img, labelText, imgWidth, imgHeight) {
     const wrapper = document.createElement('div');
     const label = document.createElement('p');
     label.innerText = labelText;
 
     wrapper.appendChild(label);
     const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 512;
+    canvas.width = imgWidth;
+    canvas.height = imgHeight;
     const context = canvas.getContext('2d');
     const typedArray = new Uint8ClampedArray(img.length);
     for (let i = 0; i < img.length - 4; i+= 4) {
@@ -51,7 +50,7 @@
       typedArray[i+ 3] = 255;
     }
 
-    const imgData = new ImageData(typedArray, 512, 512);
+    const imgData = new ImageData(typedArray, imgWidth, imgHeight);
     context.putImageData(imgData, 0, 0);
 
     wrapper.appendChild(canvas);
@@ -65,29 +64,29 @@
     ]);
 
 
-    const multiplyResult = multiply(data1, data2);
-    draw(multiplyResult, 'multiplicação');
+    const multiplyResult = multiply(data1.imgData, data2.imgData);
+    draw(multiplyResult, 'multiplicação', data1.width, data1.height);
 
-    const divideResult = divide(data1,data2);
-    draw(divideResult, 'divisão');
+    const divideResult = divide(data1.imgData, data2.imgData);
+    draw(divideResult, 'divisão', data1.width, data1.height);
 
-    const sumResult = sum(data1,data2);
-    draw(sumResult, 'soma');
+    const sumResult = sum(data1.imgData, data2.imgData);
+    draw(sumResult, 'soma', data1.width, data1.height);
 
-    const subtractResult = subtract(data1,data2);
-    draw(subtractResult, 'subtração');
+    const subtractResult = subtract(data1.imgData,data2.imgData);
+    draw(subtractResult, 'subtração', data1.width, data1.height);
 
-    const averageResult = average(data1,data2);
-    draw(averageResult, 'média');
+    const averageResult = average(data1.imgData,data2.imgData);
+    draw(averageResult, 'média', data1.width, data1.height);
 
-    const orResult = or(data1,data2);
-    draw(orResult, 'ou');
+    const orResult = or(data1.imgData,data2.imgData);
+    draw(orResult, 'ou', data1.width, data1.height);
 
-    const andResult = and(data1,data2);
-    draw(andResult, 'e');
+    const andResult = and(data1.imgData,data2.imgData);
+    draw(andResult, 'e', data1.width, data1.height);
 
-    const xorResult = xor(data1,data2);
-    draw(xorResult, 'xor');
+    const xorResult = xor(data1.imgData,data2.imgData);
+    draw(xorResult, 'xor', data1.width, data1.height);
 
     // const notResult = not(data1,data2);
     // draw(notResult, 'not');
@@ -188,9 +187,9 @@
         canvas.height = img.height;
         const context = canvas.getContext('2d');
         context.drawImage(img, 0, 0);
-        const data = context.getImageData(0, 0, 512, 512)
+        const data = context.getImageData(0, 0, img.width, img.height)
 
-        return resolve(data.data);
+        return resolve({imgData: data.data, width: img.width, height: img.height });
       }, 200);
     });
   }
