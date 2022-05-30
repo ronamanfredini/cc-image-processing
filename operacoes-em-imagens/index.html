@@ -14,6 +14,9 @@
   <label for="">2</label>
   <input type="file" id="file2">
 
+  <label for="">blending factor</label>
+  <input type="text" id="blending-factor">
+
   <button id="bumit-btn" onclick="submit()">submit</button>
 
   <img src="" id="img1" alt="">
@@ -31,6 +34,7 @@
 <script>
   const resolveOverflow = img => img.map(pixel => pixel > 255? pixel % 255: pixel);
   const resolveUnderflow = img => img.map(pixel => pixel < 0? 0: pixel);
+  const resolveUnderflowUnit = pixel => pixel < 1? 1: pixel;
 
   function draw(img, labelText, imgWidth, imgHeight) {
     const wrapper = document.createElement('div');
@@ -63,7 +67,6 @@
       getImageData('file2', 'img2')
     ]);
 
-
     const multiplyResult = multiply(data1.imgData, data2.imgData);
     draw(multiplyResult, 'multiplicação', data1.width, data1.height);
 
@@ -88,8 +91,21 @@
     const xorResult = xor(data1.imgData,data2.imgData);
     draw(xorResult, 'xor', data1.width, data1.height);
 
-    // const notResult = not(data1,data2);
-    // draw(notResult, 'not');
+    const blendingResult = blending(data1.imgData,data2.imgData);
+    draw(xorResult, 'blending', data1.width, data1.height);
+
+    const notResult = not(data1.imgData);
+    draw(notResult, 'not', data1.width, data1.height);
+  }
+
+  function blending(matrix1, matrix2) {
+    const blendingFactor = parseFloat(document.getElementById('blending-factor').value);
+    const result = [];
+    for (let i = 0; i < matrix1.length; i++) {
+      result[i] = matrix1[i] * resolveUnderflowUnit((matrix2[i] - (255 * blendingFactor)));
+    }
+
+    return resolveOverflow(result);
   }
 
   function multiply(matrix1, matrix2) {
@@ -123,6 +139,9 @@
     const result = [];
     for (let i = 0; i < matrix1.length; i++) {
       result[i] = matrix1[i] / matrix2[i];
+      if (matrix2[i] === 0) {
+        result[i] = 255;
+      }
     }
 
     return resolveUnderflow(result);
@@ -164,14 +183,14 @@
     return resolveOverflow(result);
   }
 
-  // function not(matrix1, matrix2) {
-  //   const result = [];
-  //   for (let i = 0; i < matrix1.length; i++) {
-  //     result[i] = matrix1[i] ~ matrix2[i];
-  //   }
+  function not(matrix1) {
+    const result = [];
+    for (let i = 0; i < matrix1.length; i++) {
+      result[i] = 255 - matrix1[i];
+    }
 
-  //   return resolveOverflow(result);
-  // }
+    return resolveOverflow(result);
+  }
 
   function getImageData(inputId, imgId) {
     return new Promise((resolve, reject) => {
