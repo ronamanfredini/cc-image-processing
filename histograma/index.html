@@ -1,0 +1,140 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <label for="">1</label>
+  <input type="file" id="file1">
+
+  <button id="bumit-btn" onclick="submit()">submit</button>
+
+  <img src="" id="img1" alt="">
+  <img src="" id="img2" alt="">
+
+  <br>
+  <br>
+
+  <h1>Resultado:</h1>
+  <div id="canvas-wrapper"></div>
+
+</body>
+
+
+<script>
+  const resolveOverflow = img => img.map(pixel => pixel > 255? pixel % 255: pixel);
+  const resolveUnderflow = img => img.map(pixel => pixel < 0? 0: pixel);
+  const resolveUnderflowUnit = pixel => pixel < 1? 1: pixel;
+
+  function getImageData(inputId, imgId) {
+    return new Promise((resolve, reject) => {
+      const input = document.getElementById(inputId);
+      const img = document.getElementById(imgId)
+      img.src = URL.createObjectURL(input.files[0]);
+      console.log(input.files[0])
+      const imgObj = new Image();
+
+      setTimeout(() => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const context = canvas.getContext('2d');
+        context.drawImage(img, 0, 0);
+        const data = context.getImageData(0, 0, img.width, img.height)
+
+        return resolve({imgData: data.data, width: img.width, height: img.height });
+      }, 200);
+    });
+  }
+
+  function draw(img, labelText, imgWidth, imgHeight) {
+    const wrapper = document.createElement('div');
+    const label = document.createElement('p');
+    label.innerText = labelText;
+
+    wrapper.appendChild(label);
+    const canvas = document.createElement('canvas');
+    canvas.width = imgWidth;
+    canvas.height = imgHeight;
+    const context = canvas.getContext('2d');
+    const typedArray = new Uint8ClampedArray(img.length);
+    for (let i = 0; i < img.length - 4; i+= 4) {
+      typedArray[i] = img[i];
+      typedArray[i+ 1] = img[i + 1];
+      typedArray[i + 2] = img[i + 2];
+      typedArray[i+ 3] = 255;
+    }
+
+    const imgData = new ImageData(typedArray, imgWidth, imgHeight);
+    console.log(imgData)
+    context.putImageData(imgData, 0, 0);
+
+    wrapper.appendChild(canvas);
+    document.getElementById('canvas-wrapper').appendChild(wrapper);
+  }
+
+  async function submit() {
+    const [data1, data2] = await Promise.all([
+      getImageData('file1', 'img1'),
+    ]);
+
+    const histogramResult = histogram(data1.imgData, data1.width);
+    draw(histogramResult, 'histogram', data1.width, data1.width);
+  }
+
+  function histogram(matrix, width) {
+    let minValue = 9999999999;
+    const pixelCount = [];
+    const cumulative = [];
+    const newImagePixels = [];
+    const newImage = [];
+    const invert = [];
+
+    for (let i = 0; i < 256; i++) {
+      pixelCount[i] = 0;
+      cumulative[i] = 0;
+    }
+
+    for (let i = 0 ; i < matrix.length; i += 4) {
+      pixelCount[matrix[i]]++;
+    }
+
+    for (let i = 0 ; i < pixelCount.length; i++) {
+      if (i === 0) {
+        cumulative[i] = pixelCount[i];
+        continue;
+      }
+
+      cumulative[i] = pixelCount[i - 1] + pixelCount[i];
+    }
+
+    for (let i = 0; i < cumulative.length; i++) {
+      if (cumulative[i] < minValue) {
+        minValue = cumulative[i];
+      }
+    }
+
+
+    for (let i = 0; i < matrix.length; i += 4) {
+      const firstDivisionWing = cumulative[matrix[i]] - minValue;
+      // console.log('firstDivisionWing', firstDivisionWing);
+      const squaredWidth = width * width;
+      const secondDivisionWing = squaredWidth - minValue
+      // console.log('secondDivisionWing', secondDivisionWing)
+
+      const result = Math.floor(firstDivisionWing / secondDivisionWing * 255);
+      newImagePixels[i] = result;
+      newImagePixels[i + 1] = result;
+      newImagePixels[i + 2] = result;
+      newImagePixels[i + 3] = 255;
+    }
+
+    return newImagePixels;
+  }
+</script>
+
+</html>
