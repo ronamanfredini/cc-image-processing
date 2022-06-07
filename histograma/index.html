@@ -109,24 +109,19 @@
         continue;
       }
 
-      cumulative[i] = pixelCount[i - 1] + pixelCount[i];
+      cumulative[i] = cumulative[i - 1] + pixelCount[i];
     }
 
-    for (let i = 0; i < cumulative.length; i++) {
-      if (cumulative[i] < minValue) {
-        minValue = cumulative[i];
-      }
-    }
-
+    minValue = cumulative[0];
 
     for (let i = 0; i < matrix.length; i += 4) {
-      const firstDivisionWing = cumulative[matrix[i]] - minValue;
+      const firstDivision = cumulative[matrix[i]] - minValue;
       // console.log('firstDivisionWing', firstDivisionWing);
       const squaredWidth = width * width;
-      const secondDivisionWing = squaredWidth - minValue
+      const secondDivision = squaredWidth - minValue
       // console.log('secondDivisionWing', secondDivisionWing)
 
-      const result = Math.floor(firstDivisionWing / secondDivisionWing * 255);
+      const result = Math.floor(firstDivision / secondDivision * 255);
       newImagePixels[i] = result;
       newImagePixels[i + 1] = result;
       newImagePixels[i + 2] = result;
