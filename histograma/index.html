@@ -62,7 +62,6 @@
         const input = document.getElementById(inputId);
         const img = document.getElementById(imgId);
         img.src = URL.createObjectURL(input.files[0]);
-        console.log(input.files[0]);
         const imgObj = new Image();
 
         setTimeout(() => {
@@ -103,7 +102,6 @@
       }
 
       const imgData = new ImageData(typedArray, imgWidth, imgHeight);
-      console.log(imgData);
       context.putImageData(imgData, 0, 0);
 
       wrapper.appendChild(canvas);
@@ -152,10 +150,8 @@
 
       for (let i = 0; i < matrix.length; i += 4) {
         const firstDivision = cumulative[matrix[i]] - minValue;
-        // console.log('firstDivisionWing', firstDivisionWing);
         const squaredWidth = width * width;
         const secondDivision = squaredWidth - minValue;
-        // console.log('secondDivisionWing', secondDivisionWing)
 
         const result = Math.floor((firstDivision / secondDivision) * 255);
         newImagePixels[i] = result;
