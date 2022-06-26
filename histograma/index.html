@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>CC Image Processing</title>
   </head>
 
   <body>
@@ -31,6 +31,9 @@
     src="https://www.gstatic.com/charts/loader.js"
   ></script>
 
+  <script src="histogram.js"></script>
+  <script src="average-filter.js"></script>
+  <script src="utils.js"></script>
   <script>
     google.charts.load("current", { packages: ["corechart"] });
 
@@ -51,11 +54,9 @@
       chart.draw(data, options);
     }
 
-    const resolveOverflow = (img) =>
-      img.map((pixel) => (pixel > 255 ? pixel % 255 : pixel));
-    const resolveUnderflow = (img) =>
-      img.map((pixel) => (pixel < 0 ? 0 : pixel));
-    const resolveUnderflowUnit = (pixel) => (pixel < 1 ? 1 : pixel);
+    const resolveUnderflow = img =>
+      img.map(pixel => (pixel < 0 ? 0 : pixel));
+    const resolveUnderflowUnit = pixel => pixel < 1 ? 1 : pixel;
 
     function getImageData(inputId, imgId) {
       return new Promise((resolve, reject) => {
@@ -81,7 +82,7 @@
       });
     }
 
-    const transformToDraw = (arr) => arr.map((item, idx) => [idx, item]);
+    const transformToDrawChart = (arr) => arr.map((item, idx) => [idx, item]);
 
     function draw(img, labelText, imgWidth, imgHeight) {
       const wrapper = document.createElement("div");
@@ -108,59 +109,34 @@
       document.getElementById("canvas-wrapper").appendChild(wrapper);
     }
 
-    async function submit() {
+    async function runHistogram() {
       const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
-
       const [histogramResult, oldDistribution] = histogram(data1.imgData, data1.width);
       const [, newDistribution] = histogram(histogramResult, data1.width);
-      const oldChartValues = transformToDraw(oldDistribution);
-      const newChartValues = transformToDraw(newDistribution);
+      const oldChartValues = transformToDrawChart(oldDistribution);
+      const newChartValues = transformToDrawChart(newDistribution);
       drawChart(oldChartValues, 'Pixel distribution (before)', 'before_distribution');
       drawChart(newChartValues, 'Pixel distribution (after)','after_distribution');
       draw(histogramResult, "histogram", data1.width, data1.width);
     }
 
-    function histogram(matrix, width) {
-      let minValue = 9999999999;
-      const pixelCount = [];
-      const cumulative = [];
-      const newImagePixels = [];
-      const newImage = [];
-      const invert = [];
+    async function runAverageFilter() {
+      const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
+    //   const test = [1,1,1,1,   1,1,1,1,  1,1,1,1,   1,1,1,1,
+    //                 1,1,1,1,   1,1,1,1,  1,1,1,1,   1,1,1,1,
+    //                 1,1,1,1,   1,1,1,1,  1,1,1,1,   1,1,1,1,
+    //                 1,1,1,1,   1,1,1,1,  1,1,1,1,   1,1,1,1
+    // ]
+      const imgValues = averageFilter(data1.imgData, data1.width, 3);
 
-      for (let i = 0; i < 256; i++) {
-        pixelCount[i] = 0;
-        cumulative[i] = 0;
-      }
+      console.log(imgValues)
+      // const imgValues = averageFilter(test, 4, 3);
+      draw(imgValues, "average filter", data1.width, data1.width);
+    }
 
-      for (let i = 0; i < matrix.length; i += 4) {
-        pixelCount[matrix[i]]++;
-      }
-
-      for (let i = 0; i < pixelCount.length; i++) {
-        if (i === 0) {
-          cumulative[i] = pixelCount[i];
-          continue;
-        }
-
-        cumulative[i] = cumulative[i - 1] + pixelCount[i];
-      }
-
-      minValue = cumulative[0];
-
-      for (let i = 0; i < matrix.length; i += 4) {
-        const firstDivision = cumulative[matrix[i]] - minValue;
-        const squaredWidth = width * width;
-        const secondDivision = squaredWidth - minValue;
-
-        const result = Math.floor((firstDivision / secondDivision) * 255);
-        newImagePixels[i] = result;
-        newImagePixels[i + 1] = result;
-        newImagePixels[i + 2] = result;
-        newImagePixels[i + 3] = 255;
-      }
-
-      return [newImagePixels, pixelCount];
+    async function submit() {
+      // runHistogram();
+      runAverageFilter();
     }
   </script>
 </html>
