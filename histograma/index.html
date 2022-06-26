@@ -11,6 +11,8 @@
     <input type="file" id="file1" />
 
     <button id="bumit-btn" onclick="submit()">submit</button>
+    <label for="">Ordem</label>
+    <input type="text" id="order">
 
     <img src="" id="img1" alt="" />
     <img src="" id="img2" alt="" />
@@ -33,7 +35,14 @@
 
   <script src="histogram.js"></script>
   <script src="average-filter.js"></script>
+  <script src="minimum-filter.js"></script>
+  <script src="maximum-filter.js"></script>
+  <script src="order-filter.js"></script>
+  <script src="median-filter.js"></script>
+  <script src="conservative-smoothing.js"></script>
+  <script src="gaussian-filter.js"></script>
   <script src="utils.js"></script>
+
   <script>
     google.charts.load("current", { packages: ["corechart"] });
 
@@ -122,20 +131,56 @@
 
     async function runAverageFilter() {
       const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
-    //   const test = [1,1,1,1,   1,1,1,1,  1,1,1,1,   1,1,1,1,
-    //                 1,1,1,1,   1,1,1,1,  1,1,1,1,   1,1,1,1,
-    //                 1,1,1,1,   1,1,1,1,  1,1,1,1,   1,1,1,1,
-    //                 1,1,1,1,   1,1,1,1,  1,1,1,1,   1,1,1,1
-    // ]
       const imgValues = averageFilter(data1.imgData, data1.width, 3);
-
-      console.log(imgValues)
-      // const imgValues = averageFilter(test, 4, 3);
       draw(imgValues, "average filter", data1.width, data1.width);
     }
 
+    async function runMinimumFilter() {
+      const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
+      const imgValues = minimumFilter(data1.imgData, data1.width, 3);
+      draw(imgValues, "minimum filter", data1.width, data1.width);
+    }
+
+
+    async function runMaximumFilter() {
+      const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
+      const imgValues = maximumFilter(data1.imgData, data1.width, 3);
+      draw(imgValues, "maximum filter", data1.width, data1.width);
+    }
+
+    async function runMedianFilter() {
+      const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
+      const imgValues = medianFilter(data1.imgData, data1.width, 3);
+      draw(imgValues, "median filter", data1.width, data1.width);
+    }
+
+    async function runOrderFilter() {
+      const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
+      const orderVal = parseInt(document.getElementById('order').value);
+      const imgValues = orderFilter(data1.imgData, data1.width, orderVal, 3);
+      draw(imgValues, "order filter", data1.width, data1.width);
+    }
+
+    async function runConservativeSmoothingFilter() {
+      const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
+      const imgValues = conservativeSmoothing(data1.imgData, data1.width, 3);
+      draw(imgValues, "conservative smoothing filter", data1.width, data1.width);
+    }
+
+    async function runGaussianFilter() {
+      const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
+      const imgValues = gaussianFilter(data1.imgData, data1.width, 3);
+      draw(imgValues, "gaussian filter", data1.width, data1.width);
+    }
+
     async function submit() {
-      // runHistogram();
+      runGaussianFilter();
+      runConservativeSmoothingFilter();
+      runOrderFilter();
+      runMedianFilter();
+      runMaximumFilter();
+      runMinimumFilter();
+      runHistogram();
       runAverageFilter();
     }
   </script>

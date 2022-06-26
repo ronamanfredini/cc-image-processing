@@ -28,6 +28,7 @@ function averageFilter(matrix, width, filterSize = 3) {
 
       lineAndChunkSeparated[i][j][0] = totalPixelSum[0] / totalPixelCount;
       lineAndChunkSeparated[i][j][1] = totalPixelSum[1] / totalPixelCount;
+      // TODO ajustar Blue
       lineAndChunkSeparated[i][j][2] = lineAndChunkSeparated[i][j][1];
       lineAndChunkSeparated[i][j][3] = 255;
     }
