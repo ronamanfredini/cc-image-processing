@@ -1,14 +1,15 @@
 function conservativeSmoothing(matrix, width, filterSize) {
   const lineSeparated = separateMatrixIntoLines(matrix, width);
   const lineAndChunkSeparated = separateChunkIntoPixels(lineSeparated);
-  const kernelSize = kernelMapping[filterSize.toString()];
+  const kernelSize = (filterSize - 1) / 2;
+  const img2 = JSON.parse(JSON.stringify(lineAndChunkSeparated));
 
-  for (let i = 0; i< lineAndChunkSeparated.length; i++) {
-    for (let j = 0; j < lineAndChunkSeparated[i].length; j++) {
+  for (let i = kernelSize; i< lineAndChunkSeparated.length - kernelSize; i++) {
+    for (let j = kernelSize; j < lineAndChunkSeparated[i].length - kernelSize; j++) {
       let maximumValue = [0, 0, 0, 0];
       let minimumValue = [256, 256, 256, 256];
 
-      for (let l = i - kernelSize; l < i + kernelSize; l++) {
+      for (let l = i - kernelSize; l <= i + kernelSize; l++) {
         for (let m = j - kernelSize; m <= j + kernelSize; m++) {
           if (lineAndChunkSeparated[l] && lineAndChunkSeparated[l][m] && !(i === l && j === m)) {
             lineAndChunkSeparated[l][m].forEach((pixelVal, idx) => {
@@ -26,18 +27,15 @@ function conservativeSmoothing(matrix, width, filterSize) {
 
       lineAndChunkSeparated[i][j].forEach((pixelVal, idx) => {
         if (pixelVal > maximumValue[idx]) {
-          lineAndChunkSeparated[i][j][idx] = maximumValue[idx];    
+          img2[i][j][idx] = maximumValue[idx];    
         }
 
         if (pixelVal < minimumValue[idx]) {
-          lineAndChunkSeparated[i][j][idx] = minimumValue[idx];    
+          img2[i][j][idx] = minimumValue[idx];    
         }
       });
 
-
-      //TODO ajustar Blue
-      lineAndChunkSeparated[i][j][2] = lineAndChunkSeparated[i][j][1];
-      lineAndChunkSeparated[i][j][3] = 255;
+      img2[i][j][3] = 255;
     }
   }
 

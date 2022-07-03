@@ -19,7 +19,7 @@ function separateChunkIntoPixels(matrix) {
   return matrix.map(line => {
     const newLine = [];
     for (let i = 0; i < line.length; i += 4) {
-      const pixelChunk = [line[i], line[i + 1], line[1 + 2], line[i + 3]];
+      const pixelChunk = [line[i], line[i + 1], line[i + 2], line[i + 3]];
       newLine.push(pixelChunk);
     }
 

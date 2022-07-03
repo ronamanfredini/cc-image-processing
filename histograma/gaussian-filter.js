@@ -1,22 +1,31 @@
 function gaussianFilter(matrix, width, filterSize) {
   const lineSeparated = separateMatrixIntoLines(matrix, width);
   const lineAndChunkSeparated = separateChunkIntoPixels(lineSeparated);
-  const kernelSize = kernelMapping[filterSize.toString()];
+  const img2 = JSON.parse(JSON.stringify(lineAndChunkSeparated));
+  const kernelSize = (filterSize - 1) / 2;
 
-  for (let i = 0; i< lineAndChunkSeparated.length; i++) {
-    for (let j = 0; j < lineAndChunkSeparated[i].length; j++) {
-      const bias = 4;
+  for (let i = kernelSize; i < lineAndChunkSeparated.length - kernelSize; i++) {
+    for (let j = kernelSize; j < lineAndChunkSeparated[i].length - kernelSize; j++) {
+      let totalPixelSum = [[], [], [], []];
 
-      lineAndChunkSeparated[i][j].forEach((pixelVal, idx) => {
-        const newPixelValue = (1 / (2 * Math.PI * (bias * bias))) * Math.exp(-1 * (((i * i) + (j * j)) / (2 * (bias * bias))));
-        lineAndChunkSeparated[i][j][idx] = newPixelValue;
-      });
+      for (let l = i - kernelSize; l <= i + kernelSize; l++) {
+        for (let m = j - kernelSize; m <= j + kernelSize; m++) {
+          if (l == i && m == j) {
+            continue;
+          } else {
+            totalPixelSum[0].push(lineAndChunkSeparated[l][m][0]);
+            totalPixelSum[1].push(lineAndChunkSeparated[l][m][1]);
+            totalPixelSum[2].push(lineAndChunkSeparated[l][m][2]);
+          }
+        }
+      }
 
-
-      //TODO ajustar Blue
-      lineAndChunkSeparated[i][j][3] = 255;
+      img2[i][j][0] = Math.max(...totalPixelSum[0]);
+      img2[i][j][1] = Math.max(...totalPixelSum[1]);
+      img2[i][j][2] = Math.max(...totalPixelSum[2]);
+      img2[i][j][3] = 255;
     }
   }
 
-  return flattenV2(lineAndChunkSeparated);  
+  return flattenV2(img2);
 }

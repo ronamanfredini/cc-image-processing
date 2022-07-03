@@ -7,6 +7,7 @@ const kernelMapping = {
 function averageFilter(matrix, width, filterSize = 3) {
   const lineSeparated = separateMatrixIntoLines(matrix, width);
   const lineAndChunkSeparated = separateChunkIntoPixels(lineSeparated);
+  const img2 = JSON.parse(JSON.stringify(lineAndChunkSeparated));
   const kernelSize = (filterSize - 1) / 2;
   const totalPixelCount = filterSize * filterSize;
 
@@ -22,12 +23,12 @@ function averageFilter(matrix, width, filterSize = 3) {
         }
       }
 
-      lineAndChunkSeparated[i][j][0] = totalPixelSum[0] / totalPixelCount;
-      lineAndChunkSeparated[i][j][1] = totalPixelSum[1] / totalPixelCount;
-      lineAndChunkSeparated[i][j][2] = totalPixelSum[2] / totalPixelCount;
-      lineAndChunkSeparated[i][j][3] = 255;
+      img2[i][j][0] = totalPixelSum[0] / totalPixelCount;
+      img2[i][j][1] = totalPixelSum[1] / totalPixelCount;
+      img2[i][j][2] = totalPixelSum[2] / totalPixelCount;
+      img2[i][j][3] = 255;
     }
   }
 
-  return flattenV2(lineAndChunkSeparated);
+  return flattenV2(img2);
 }

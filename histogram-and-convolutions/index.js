@@ -97,21 +97,25 @@ function getImageData(inputId, imgId) {
     return new Promise((resolve, reject) => {
       const input = document.getElementById(inputId);
       const img = document.getElementById(imgId)
-
-      img.src = URL.createObjectURL(input.files[0]);
-      console.log(input.files[0])
-      const imgObj = new Image();
-
-      setTimeout(() => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const context = canvas.getContext('2d');
-        context.drawImage(img, 0, 0);
-        const data = context.getImageData(0, 0, 512, 512)
-
-        return resolve(data.data);
-      }, 200);
+      if (input.files.length > 0) {
+        img.src = URL.createObjectURL(input.files[0]);
+        console.log(input.files[0])
+        const imgObj = new Image();
+  
+        setTimeout(() => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const context = canvas.getContext('2d');
+          context.drawImage(img, 0, 0);
+          const data = context.getImageData(0, 0, 512, 512)
+  
+          return resolve(data.data);
+        }, 200);
+      } else {
+        console.log('Input has no files');
+        resolve([]);
+      }
     });
 }
 

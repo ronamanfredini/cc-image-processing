@@ -1,31 +1,31 @@
 function minimumFilter(matrix, width, filterSize) {
   const lineSeparated = separateMatrixIntoLines(matrix, width);
   const lineAndChunkSeparated = separateChunkIntoPixels(lineSeparated);
-  const kernelSize = kernelMapping[filterSize.toString()];
-  // const averageBias = 1 / (filterSize * filterSize);
+  const img2 = JSON.parse(JSON.stringify(lineAndChunkSeparated));
+  const kernelSize = (filterSize - 1) / 2;
 
-  for (let i = 0; i< lineAndChunkSeparated.length; i++) {
-    for (let j = 0; j < lineAndChunkSeparated[i].length; j++) {
-      let minimumValue = [255, 255, 255, 255];
+  for (let i = kernelSize; i < lineAndChunkSeparated.length - kernelSize; i++) {
+    for (let j = kernelSize; j < lineAndChunkSeparated[i].length - kernelSize; j++) {
+      let totalPixelSum = [[], [], [], []];
 
-      for (let l = i - kernelSize; l < i + kernelSize; l++) {
+      for (let l = i - kernelSize; l <= i + kernelSize; l++) {
         for (let m = j - kernelSize; m <= j + kernelSize; m++) {
-          if (lineAndChunkSeparated[l] && lineAndChunkSeparated[l][m]) {
-            lineAndChunkSeparated[l][m].forEach((pixelVal, idx) => {
-              if (minimumValue[idx] > pixelVal) {
-                minimumValue[idx] = pixelVal;
-              }
-            })
+          if (l == i && m == j) {
+            continue;
+          } else {
+            totalPixelSum[0].push(lineAndChunkSeparated[l][m][0]);
+            totalPixelSum[1].push(lineAndChunkSeparated[l][m][1]);
+            totalPixelSum[2].push(lineAndChunkSeparated[l][m][2]);
           }
         }
       }
 
-      lineAndChunkSeparated[i][j][0] = minimumValue[0];
-      lineAndChunkSeparated[i][j][1] = minimumValue[1];
-      lineAndChunkSeparated[i][j][2] = minimumValue[2];
-      lineAndChunkSeparated[i][j][3] = 255;
+      img2[i][j][0] = Math.min(...totalPixelSum[0]);
+      img2[i][j][1] = Math.min(...totalPixelSum[1]);
+      img2[i][j][2] = Math.min(...totalPixelSum[2]);
+      img2[i][j][3] = 255;
     }
   }
 
-  return flattenV2(lineAndChunkSeparated);  
+  return flattenV2(img2);
 }

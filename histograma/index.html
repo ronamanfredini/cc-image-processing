@@ -156,7 +156,12 @@
 
     async function runOrderFilter() {
       const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
-      const orderVal = parseInt(document.getElementById('order').value);
+      const orderInputVal = document.getElementById('order').value;
+      let orderVal = 1;
+      if (orderInputVal) {
+        orderVal = parseInt(orderInputVal);
+      }
+
       const imgValues = orderFilter(data1.imgData, data1.width, orderVal, 3);
       draw(imgValues, "order filter", data1.width, data1.width);
     }
@@ -174,14 +179,19 @@
     }
 
     async function submit() {
+      runMinimumFilter();
       runGaussianFilter();
       runConservativeSmoothingFilter();
       runOrderFilter();
       runMedianFilter();
       runMaximumFilter();
-      runMinimumFilter();
       runHistogram();
       runAverageFilter();
     }
   </script>
 </html>
+
+
+
+
+
