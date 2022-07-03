@@ -1,0 +1,100 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="index.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+    <title>Operações Aritméticas e Lógicas em Imagens</title>
+</head>
+<body>
+  <div class="image1-content">
+    <span class="title-content">Imagem A</span>
+    <div>
+      <img id="myImage1" class="img"/>
+    </div>
+    
+    <div class="buttons">
+      <input type="file" id="arquivo1"></input>
+    </div>
+  </div>
+
+  <div class="image2-content">
+    <span class="title-content">Imagem B</span>
+    <div>
+      <img id="myImage2" class="img"/>
+    </div>
+    
+    <div class="buttons">
+      <input type="file" id="arquivo2"></input>
+    </div>
+  </div>
+
+  <div class="options">
+    <span class="title-content">Operações Aritméticas</span>
+    <button class="option" onclick="sendImage('add')">Adição</button>
+    <button class="option" onclick="sendImage('subt')">Subtração</button>
+    <div>
+      <button class="option" onclick="sendImage('mult')">Multiplicação</button>
+    </div>
+    <div>
+      <button class="option" onclick="sendImage('div')">Divisão</button>
+    </div>
+    <button class="option" onclick="sendImage('media')">Média</button>
+    <div>
+      <button class="option" onclick="sendImage('blend')">Blending</button>
+      <input class="input" type="number" name="" id="blend">
+    </div>
+  </div>
+
+  <div class="options">
+    <span class="title-content">Operações Lógicas</span>
+    <button class="option" onclick="sendImage('andd')">AND</button>
+    <button class="option" onclick="sendImage('or')">OR</button>
+    <button class="option" onclick="sendImage('xor')">XOR</button>
+    <button class="option" onclick="sendImage('not1')">NOT</button>
+  </div>
+
+  <div class="options">
+    <span class="title-content">Histograma + Convoluções</span>
+    <button class="option" onclick="sendImage('calcHistImg1Gray')">Histograma Escala de cinza</button>
+    <button class="option" onclick="sendImage('calcHistImg1RGB')">Histograma RGB</button>
+    <button class="option" onclick="sendImage('realImg1Min')">Realçe Min</button>
+    <button class="option" onclick="sendImage('realImg1Max')">Realçe Max</button>
+    <button class="option" onclick="sendImage('realImg1Media')">Realçe Media</button>
+    <button class="option" onclick="sendImage('realImg1Mediana')">Realçe Mediana</button>
+  </div>
+  
+
+  <div class="result-image-content">
+
+    <span class="title-hist1"></span>
+    <canvas height="100" width="300" id="grafico-histograma1"></canvas>
+
+    <span class="title-hist1Eq"></span>
+    <canvas height="100" width="300" id="grafico-histogramaEq"></canvas>
+
+    <span class="title-hist1R"></span>
+    <canvas height="100" width="300" id="grafico-histogramaR"></canvas>
+
+    <span class="title-hist1G"></span>
+    <canvas height="100" width="300" id="grafico-histogramaG"></canvas>
+
+    <span class="title-hist1B"></span>
+    <canvas height="100" width="300" id="grafico-histogramaB"></canvas>
+
+    <div class="result-content">
+      <div id="canvas-wrapper" style="width: 512px!important; height: 512px!important"></div>
+      
+      <!-- <div class="buttons">
+        <button class="btn">Salvar Imagem</button>
+      </div> -->
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+  <script src="index.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</body>
+</html>

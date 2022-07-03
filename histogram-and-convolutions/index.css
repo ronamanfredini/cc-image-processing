@@ -1,0 +1,48 @@
+.image1-content {
+    display: flex;
+    width: 40%;
+    flex-direction: column;
+}
+
+.image2-content {
+    display: flex;
+    width: 40%;
+    flex-direction: column;
+}
+
+.buttons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.options {
+    display: flex;
+    margin-top: 15px;
+
+}
+
+.option {
+    margin-top: 1px;
+    background-color: white;
+    color: black;
+    border: 1px solid;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button {
+    margin-left: 2px;
+
+}
+
+input[type=file] {
+    float: left;
+    display: block;
+}
+.hide {
+    display: none;
+    float: left;
+}
