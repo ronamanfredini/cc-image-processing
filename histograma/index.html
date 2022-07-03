@@ -10,9 +10,12 @@
     <label for="">1</label>
     <input type="file" id="file1" />
 
-    <button id="bumit-btn" onclick="submit()">submit</button>
     <label for="">Ordem</label>
     <input type="text" id="order">
+
+    <label for="">Tamanho do filtro</label>
+    <input type="text" value="3" id="filter-size">
+    <button id="bumit-btn" onclick="submit()">submit</button>
 
     <img src="" id="img1" alt="" />
     <img src="" id="img2" alt="" />
@@ -130,31 +133,38 @@
     }
 
     async function runAverageFilter() {
+      const filterSize = parseInt(document.getElementById('filter-size').value);
       const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
-      const imgValues = averageFilter(data1.imgData, data1.width, 3);
+      const imgValues = averageFilter(data1.imgData, data1.width, filterSize);
       draw(imgValues, "average filter", data1.width, data1.width);
     }
 
     async function runMinimumFilter() {
+      const filterSize = parseInt(document.getElementById('filter-size').value);
       const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
-      const imgValues = minimumFilter(data1.imgData, data1.width, 3);
+      const imgValues = minimumFilter(data1.imgData, data1.width, filterSize);
       draw(imgValues, "minimum filter", data1.width, data1.width);
     }
 
 
     async function runMaximumFilter() {
+      const filterSize = parseInt(document.getElementById('filter-size').value);
       const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
-      const imgValues = maximumFilter(data1.imgData, data1.width, 3);
+      const imgValues = maximumFilter(data1.imgData, data1.width, filterSize);
       draw(imgValues, "maximum filter", data1.width, data1.width);
     }
 
     async function runMedianFilter() {
+      const filterSize = parseInt(document.getElementById('filter-size').value);
+
       const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
-      const imgValues = medianFilter(data1.imgData, data1.width, 3);
+      const imgValues = medianFilter(data1.imgData, data1.width, filterSize);
       draw(imgValues, "median filter", data1.width, data1.width);
     }
 
     async function runOrderFilter() {
+      const filterSize = parseInt(document.getElementById('filter-size').value);
+
       const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
       const orderInputVal = document.getElementById('order').value;
       let orderVal = 1;
@@ -162,25 +172,28 @@
         orderVal = parseInt(orderInputVal);
       }
 
-      const imgValues = orderFilter(data1.imgData, data1.width, orderVal, 3);
+      const imgValues = orderFilter(data1.imgData, data1.width, orderVal, filterSize);
       draw(imgValues, "order filter", data1.width, data1.width);
     }
 
     async function runConservativeSmoothingFilter() {
+      const filterSize = parseInt(document.getElementById('filter-size').value);
+
       const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
-      const imgValues = conservativeSmoothing(data1.imgData, data1.width, 3);
+      const imgValues = conservativeSmoothing(data1.imgData, data1.width, filterSize);
       draw(imgValues, "conservative smoothing filter", data1.width, data1.width);
     }
 
     async function runGaussianFilter() {
+      const filterSize = parseInt(document.getElementById('filter-size').value);
       const [data1, data2] = await Promise.all([getImageData("file1", "img1")]);
-      const imgValues = gaussianFilter(data1.imgData, data1.width, 3);
+      const imgValues = gaussianFilter(data1.imgData, data1.width, filterSize);
       draw(imgValues, "gaussian filter", data1.width, data1.width);
     }
 
     async function submit() {
-      runMinimumFilter();
       runGaussianFilter();
+      runMinimumFilter();
       runConservativeSmoothingFilter();
       runOrderFilter();
       runMedianFilter();
